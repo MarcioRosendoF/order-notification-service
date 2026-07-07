@@ -4,6 +4,8 @@ import com.marcio.ordernotification.dto.CreateOrderRequest;
 import com.marcio.ordernotification.dto.OrderItemResponse;
 import com.marcio.ordernotification.dto.OrderResponse;
 import com.marcio.ordernotification.exception.OrderNotFoundException;
+import com.marcio.ordernotification.messaging.event.OrderStatusChangedEvent;
+import com.marcio.ordernotification.messaging.producer.OrderEventPublisher;
 import com.marcio.ordernotification.model.Order;
 import com.marcio.ordernotification.model.OrderItem;
 import com.marcio.ordernotification.model.OrderStatus;
@@ -21,8 +23,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-
     private final OrderRepository orderRepository;
+    private final OrderEventPublisher orderEventPublisher;
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
@@ -75,8 +77,18 @@ public class OrderService {
     public OrderResponse updateStatus(UUID id, OrderStatus newStatus) {
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
+        
+        OrderStatus oldStatus = order.getStatus();
         order.transitionTo(newStatus);
         Order saved = orderRepository.save(order);
+        
+        orderEventPublisher.publishStatusChangedEvent(new OrderStatusChangedEvent(
+                saved.getId(),
+                oldStatus,
+                newStatus,
+                Instant.now()
+        ));
+        
         return mapToResponse(saved);
     }
 

@@ -5,6 +5,8 @@ import com.marcio.ordernotification.dto.CreateOrderRequest;
 import com.marcio.ordernotification.dto.OrderResponse;
 import com.marcio.ordernotification.exception.InvalidStatusTransitionException;
 import com.marcio.ordernotification.exception.OrderNotFoundException;
+import com.marcio.ordernotification.messaging.event.OrderStatusChangedEvent;
+import com.marcio.ordernotification.messaging.producer.OrderEventPublisher;
 import com.marcio.ordernotification.model.Order;
 import com.marcio.ordernotification.model.OrderStatus;
 import com.marcio.ordernotification.repository.OrderRepository;
@@ -26,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +36,9 @@ class OrderServiceTest {
 
     @Mock
     private OrderRepository orderRepository;
+
+    @Mock
+    private OrderEventPublisher orderEventPublisher;
 
     @InjectMocks
     private OrderService orderService;
@@ -102,6 +108,7 @@ class OrderServiceTest {
         OrderResponse response = orderService.updateStatus(orderId, OrderStatus.CONFIRMED);
 
         assertEquals(OrderStatus.CONFIRMED, response.status());
+        verify(orderEventPublisher).publishStatusChangedEvent(any(OrderStatusChangedEvent.class));
     }
 
     @Test
@@ -122,6 +129,7 @@ class OrderServiceTest {
         OrderResponse response = orderService.updateStatus(orderId, OrderStatus.CANCELLED);
 
         assertEquals(OrderStatus.CANCELLED, response.status());
+        verify(orderEventPublisher).publishStatusChangedEvent(any(OrderStatusChangedEvent.class));
     }
 
     @Test
@@ -142,6 +150,7 @@ class OrderServiceTest {
         OrderResponse response = orderService.updateStatus(orderId, OrderStatus.CANCELLED);
 
         assertEquals(OrderStatus.CANCELLED, response.status());
+        verify(orderEventPublisher).publishStatusChangedEvent(any(OrderStatusChangedEvent.class));
     }
 
     @Test
