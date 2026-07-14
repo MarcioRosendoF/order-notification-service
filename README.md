@@ -1,6 +1,6 @@
 # Order Notification Service
 
-[![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3-green?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
 [![RabbitMQ](https://img.shields.io/badge/RabbitMQ-%23FF6600.svg?style=for-the-badge&logo=rabbitmq&logoColor=white)](https://www.rabbitmq.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
@@ -18,7 +18,7 @@ O **Order Notification Service** é uma API REST para gerenciamento de pedidos o
 
 ### Tecnologias
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot 3**
 - **Spring Data JPA**
 - **PostgreSQL 15**
@@ -114,7 +114,7 @@ Essa escolha foi motivada pela necessidade de auditoria independente e isolada d
 
 ### Como Executar
 
-1. **Pré-requisitos:** Java 17 e Docker / Docker Compose.
+1. **Pré-requisitos:** Java 21 e Docker / Docker Compose.
 2. **Subir os serviços (PostgreSQL e RabbitMQ):**
    ```bash
    docker compose up -d
@@ -136,7 +136,7 @@ The **Order Notification Service** is a REST API for order management where each
 
 ### Tech Stack
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot 3**
 - **Spring Data JPA**
 - **PostgreSQL 15**
@@ -232,7 +232,7 @@ This decision ensures local auditability of application logs independently, with
 
 ### How to Run
 
-1. **Requirements:** Java 17 and Docker / Docker Compose.
+1. **Requirements:** Java 21 and Docker / Docker Compose.
 2. **Start external services (PostgreSQL and RabbitMQ):**
    ```bash
    docker compose up -d
