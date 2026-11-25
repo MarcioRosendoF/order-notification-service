@@ -16,6 +16,8 @@
 
 O **Order Notification Service** é uma API REST para gerenciamento de pedidos onde cada transição de status publica eventos assíncronos no RabbitMQ, os quais são consumidos para gerar registros de notificação.
 
+O frontend que consome esta API está em [order-notification-frontend](https://github.com/MarcioRosendoF/order-notification-frontend).
+
 ### Tecnologias
 
 - **Java 21**
@@ -133,6 +135,8 @@ Essa escolha foi motivada pela necessidade de auditoria independente e isolada d
 ## English
 
 The **Order Notification Service** is a REST API for order management where each status transition publishes asynchronous events to RabbitMQ, which are then consumed to generate notification records.
+
+The frontend that consumes this API lives in [order-notification-frontend](https://github.com/MarcioRosendoF/order-notification-frontend).
 
 ### Tech Stack
 
